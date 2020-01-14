@@ -12,21 +12,7 @@ class MarsRoverPos {
     }
 
     enum MarsRoverDirection {
-        N, S, W, E,
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof MarsRoverPos){
-            MarsRoverPos marsRoverPos = (MarsRoverPos) obj;
-            return this.x == marsRoverPos.x && this.y == marsRoverPos.y && this.direction == marsRoverPos.direction;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
+        N, E, S, W,
     }
 }
 
@@ -46,7 +32,7 @@ public class MarsRover {
                 case R:
                     result = handleTurnR(marsRoverPos);
                     break;
-                default:
+                case L:
                     result = handleTurnL(marsRoverPos);
                     break;
             }
@@ -73,38 +59,14 @@ public class MarsRover {
     }
 
     MarsRoverPos handleTurnR(MarsRoverPos marsRoverPos){
-        switch (marsRoverPos.direction){
-            case N:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.E;
-                break;
-            case S:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.W;
-                break;
-            case E:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.S;
-                break;
-            case W:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.N;
-                break;
-        }
+        marsRoverPos.direction
+                = MarsRoverPos.MarsRoverDirection.values()[(marsRoverPos.direction.ordinal() + 1) % 4];
         return marsRoverPos;
     }
 
     MarsRoverPos handleTurnL(MarsRoverPos marsRoverPos){
-        switch (marsRoverPos.direction){
-            case N:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.W;
-                break;
-            case S:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.E;
-                break;
-            case E:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.N;
-                break;
-            case W:
-                marsRoverPos.direction = MarsRoverPos.MarsRoverDirection.S;
-                break;
-        }
+        marsRoverPos.direction
+                = MarsRoverPos.MarsRoverDirection.values()[(marsRoverPos.direction.ordinal() + 3) % 4];
         return marsRoverPos;
     }
 }
